@@ -61,3 +61,82 @@ formula_exists() {
     e_warning "Missing formula: $1"
     return 1
 }
+
+lowercase(){
+	echo "$1" | sed "y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/"
+}
+
+systeminfo(){
+	OS_NAME=`lowercase \`uname\``
+	OS_KERNEL=`uname -r`
+	OS_MACH=`uname -m`
+
+	if [ "${OS_NAME}" == "windowsnt" ]; then
+		OS_NAME=windows
+		OS_CONFIG_EXT=windows
+	elif [ "${OS}" == "darwin" ]; then
+		OS_NAME=mac
+		OS_CONFIG_EXT=mac
+	else
+		OS_NAME=`uname`
+		if [ "${OS_NAME}" = "Linux" ] ; then
+			if [ -f /etc/redhat-release ] ; then
+				OS_DIST_BASED_ON='RedHat'
+				OS_DIST=`cat /etc/redhat-release |sed s/\ release.*//`
+				OS_CODENAME=`cat /etc/redhat-release | sed s/.*\(// | sed s/\)//`
+				OS_REV=`cat /etc/redhat-release | sed s/.*release\ // | sed s/\ .*//`
+			elif [ -f /etc/SuSE-release ] ; then
+				OS_DIST_BASED_ON='SuSe'
+				OS_CODENAME=`cat /etc/SuSE-release | tr "\n" ' '| sed s/VERSION.*//`
+				OS_REV=`cat /etc/SuSE-release | tr "\n" ' ' | sed s/.*=\ //`
+			elif [ -f /etc/mandrake-release ] ; then
+				OS_DIST_BASED_ON='Mandrake'
+				OS_CODENAME=`cat /etc/mandrake-release | sed s/.*\(// | sed s/\)//`
+				OS_REV=`cat /etc/mandrake-release | sed s/.*release\ // | sed s/\ .*//`
+			elif [ -f /etc/debian_version ] ; then
+				OS_DIST_BASED_ON='Debian'
+				if [ -f /etc/lsb-release ] ; then
+			        	OS_DIST=`cat /etc/lsb-release | grep '^DISTRIB_ID' | awk -F=  '{ print $2 }'`
+			                OS_CODENAME=`cat /etc/lsb-release | grep '^DISTRIB_CODENAME' | awk -F=  '{ print $2 }'`
+			                OS_REV=`cat /etc/lsb-release | grep '^DISTRIB_RELEASE' | awk -F=  '{ print $2 }'`
+            			fi
+			fi
+			if [ -f /etc/UnitedLinux-release ] ; then
+				OS_DIST="${OS_DIST}[`cat /etc/UnitedLinux-release | tr "\n" ' ' | sed s/VERSION.*//`]"
+			fi
+			OS_NAME=`lowercase $OS_NAME`
+			OS_DIST_BASED_ON=`lowercase $OS_DIST_BASED_ON`
+			if [[ $OS_KERNEL = *"Microsoft"* ]]; then
+				OS_CONFIG_EXT=wsl.$(lowercase $OS_DIST)
+			else
+				OS_CONFIG_EXT=$OS_NAME.$(lowercase $OS_DIST)
+			fi
+		else
+			OS_CONFIG_EXT=$OS_NAME
+		fi
+	fi
+
+	readonly OS_NAME
+	readonly OS_DIST
+	readonly OS_DIST_BASED_ON
+	readonly OS_CODENAME
+	readonly OS_REV
+	readonly OS_KERNEL
+	readonly OS_MACH
+	readonly OS_CONFIG_EXT
+}
+
+if [ -z ${OS_NAME+x} ]; then
+	systeminfo
+fi
+
+if [ "${1}" == "--print" ]; then
+	echo "OS_NAME:          $OS_NAME"
+	echo "OS_DIST:          $OS_DIST"
+	echo "OS_CODENAME:      $OS_CODENAME"
+	echo "OS_REV:           $OS_REV"
+        echo "OS_DIST_BASED_ON: $OS_DIST_BASED_ON"
+	echo "OS_KERNEL:        $OS_KERNEL"
+	echo "OS_MACH:          $OS_MACH"
+	echo "OS_CONFIG_EXT:    $OS_CONFIG_EXT"
+fi

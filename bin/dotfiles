@@ -1,8 +1,8 @@
 #!/bin/bash
 
 DOTFILES_DIRECTORY="${HOME}/.dotfiles"
-DOTFILES_TARBALL_PATH="https://github.com/necolas/dotfiles/tarball/master"
-DOTFILES_GIT_REMOTE="git@github.com:necolas/dotfiles.git"
+DOTFILES_TARBALL_PATH="https://github.com/amarkwalder/dotfiles/tarball/master"
+DOTFILES_GIT_REMOTE="git@github.com:amarkwalder/dotfiles.git"
 
 # If missing, download and extract the dotfiles repository
 if [[ ! -d ${DOTFILES_DIRECTORY} ]]; then
@@ -47,25 +47,27 @@ do
 done
 
 # Before relying on Homebrew, check that packages can be compiled
-if ! type_exists 'gcc'; then
-    e_error "The XCode Command Line Tools must be installed first."
-    printf "  Download them from: https://developer.apple.com/downloads\n"
-    printf "  Then run: bash ~/.dotfiles/bin/dotfiles\n"
-    exit 1
-fi
+#if ! type_exists 'gcc'; then
+#    e_error "The XCode Command Line Tools must be installed first."
+#    printf "  Download them from: https://developer.apple.com/downloads\n"
+#    printf "  Then run: bash ~/.dotfiles/bin/dotfiles\n"
+#    exit 1
+#fi
 
 # Check for Homebrew
-if ! type_exists 'brew'; then
-    e_header "Installing Homebrew..."
-    ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
-fi
+#if ! type_exists 'brew'; then
+#    e_header "Installing Homebrew..."
+#    ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
+#fi
 
 # Check for git
 if ! type_exists 'git'; then
-    e_header "Updating Homebrew..."
-    brew update
-    e_header "Installing Git..."
-    brew install git
+    e_error "The git command line tools must be installed first."
+    exit 1
+#    e_header "Updating Homebrew..."
+#    brew update
+#    e_header "Installing Git..."
+#    brew install git
 fi
 
 # Initialize the git repository if it's missing
@@ -93,15 +95,15 @@ else
 fi
 
 # Install and update packages
-if [[ $no_packages ]]; then
-    printf "Skipped package installations.\n"
-else
-    printf "Updating packages...\n"
-    # Install Homebrew formulae
-    run_brew
-    # Install Node packages
-    run_npm
-fi
+#if [[ $no_packages ]]; then
+#    printf "Skipped package installations.\n"
+#else
+#    printf "Updating packages...\n"
+#    # Install Homebrew formulae
+#    run_brew
+#    # Install Node packages
+#    run_npm
+#fi
 
 link() {
     # Force create/replace the symlink.
@@ -115,22 +117,22 @@ mirrorfiles() {
     rsync -avz --quiet ${DOTFILES_DIRECTORY}/git/gitconfig  ${HOME}/.gitconfig
 
     # Force remove the vim directory if it's already there.
-    if [ -e "${HOME}/.vim" ]; then
-        rm -rf "${HOME}/.vim"
-    fi
+#    if [ -e "${HOME}/.vim" ]; then
+#        rm -rf "${HOME}/.vim"
+#    fi
 
     # Create the necessary symbolic links between the `.dotfiles` and `HOME`
     # directory. The `bash_profile` sources other files directly from the
     # `.dotfiles` repository.
     link "shell/bashrc"       ".bashrc"
     link "shell/bash_profile" ".bash_profile"
-    link "shell/curlrc"       ".curlrc"
-    link "shell/inputrc"      ".inputrc"
+ #   link "shell/curlrc"       ".curlrc"
+ #   link "shell/inputrc"      ".inputrc"
     link "git/gitattributes"  ".gitattributes"
     link "git/gitignore"      ".gitignore"
-    link "vim"                ".vim"
-    link "vim/gvimrc"         ".gvimrc"
-    link "vim/vimrc"          ".vimrc"
+ #   link "vim"                ".vim"
+ #   link "vim/gvimrc"         ".gvimrc"
+ #   link "vim/vimrc"          ".vimrc"
 
     e_success "Dotfiles update complete!"
 }
@@ -147,11 +149,11 @@ else
 fi
 
 # Ask before potentially overwriting OS X defaults
-seek_confirmation "Warning: This step may modify your OS X system defaults."
+#seek_confirmation "Warning: This step may modify your OS X system defaults."
 
-if is_confirmed; then
-    bash ./bin/osxdefaults
-    e_success "OS X settings updated! You may need to restart."
-else
-    printf "Skipped OS X settings update.\n"
-fi
+#if is_confirmed; then
+#    bash ./bin/osxdefaults
+#    e_success "OS X settings updated! You may need to restart."
+#else
+#    printf "Skipped OS X settings update.\n"
+#fi
