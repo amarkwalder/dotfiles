@@ -2,7 +2,8 @@
 
 DOTFILES_DIRECTORY="${HOME}/.dotfiles"
 DOTFILES_TARBALL_PATH="https://github.com/amarkwalder/dotfiles/tarball/master"
-DOTFILES_GIT_REMOTE="git@github.com:amarkwalder/dotfiles.git"
+#DOTFILES_GIT_REMOTE="git@github.com:amarkwalder/dotfiles.git"
+DOTFILES_GIT_REMOTE="https://github.com/amarkwalder/dotfiles.git"
 
 # If missing, download and extract the dotfiles repository
 if [[ ! -d ${DOTFILES_DIRECTORY} ]]; then
