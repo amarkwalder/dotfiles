@@ -1,0 +1,74 @@
+#!/bin/bash
+
+run_preinstall() {
+
+    # Check for git
+    if ! type_exists 'git'; then
+        e_header "Updating Ubuntu Packet Manager..."
+        sudo apt-get -y update
+        e_header "Installing Git..."
+        sudo apt-get install -y git
+    fi
+
+}
+
+run_install() {
+
+    # Check for apt-get 
+    if type_exists 'apt-get' && type_exists 'apt'; then
+        e_header "Updating apt-get..."
+        # Use the latest version of apt-get
+        sudo apt-get -y update
+        [[ $? ]] && e_success "Done"
+
+        e_header "Updating any existing apt-get packages..."
+        # Upgrade any already-installed package
+        sudo apt-get -y upgrade
+        [[ $? ]] && e_success "Done"
+
+        e_header "Checking status of desired apt-get package..."
+        local list_package
+        local -a missing_package
+        local -a desired_package=(
+            'coreutils' # GNU core utilities (those that come with OS X are outdated)
+            'rsync'
+            'git'
+            'bash'
+            'bash-completion'
+            'nodejs'
+        )
+
+        for index in ${!desired_package[*]}
+        do
+            if ! package_exists ${desired_package[$index]}; then
+                # Store the name (and options) of every missing package
+                missing_package=("${missing_package[@]}" "${desired_package[$index]}")
+            fi
+        done
+
+        if [[ "$missing_package" ]]; then
+            # Convert the array of missing package into a list of space-separate strings
+            list_package=$( printf "%s " "${missing_package[@]}" )
+
+            e_header "Installing missing apt-get package..."
+            # Install all missing packages
+            sudo apt-get -y install $list_package
+
+            [[ $? ]] && e_success "Done"
+        fi
+
+        # Remove outdated versions from the Cellar
+        sudo apt-get -y autoremove
+    else
+        printf "\n"
+        e_error "Error: apt-get or apt not found."
+        printf "Aborting...\n"
+        exit
+    fi
+
+}
+
+run_postinstall() {
+    # Do nothing
+    :
+}

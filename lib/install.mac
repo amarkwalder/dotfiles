@@ -1,6 +1,32 @@
 #!/bin/bash
 
-run_brew() {
+run_preinstall() {
+
+    # Before relying on Homebrew, check that packages can be compiled
+    if ! type_exists 'gcc'; then
+        e_error "The XCode Command Line Tools must be installed first."
+        printf "  Download them from: https://developer.apple.com/downloads\n"
+        printf "  Then run: bash ~/.dotfiles/bin/dotfiles\n"
+        exit 1
+    fi
+
+    # Check for Homebrew
+    if ! type_exists 'brew'; then
+        e_header "Installing Homebrew..."
+        ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
+    fi
+
+    # Check for git
+    if ! type_exists 'git'; then
+        e_header "Updating Homebrew..."
+        brew update
+        e_header "Installing Git..."
+        brew install git
+    fi
+
+}
+
+run_install() {
 
     # Check for Homebrew
     if type_exists 'brew'; then
@@ -20,17 +46,9 @@ run_brew() {
         local -a desired_formulae=(
             'coreutils' # GNU core utilities (those that come with OS X are outdated)
             'git'
-            'the_silver_searcher'
             'bash'
             'bash-completion'
-            'ffmpeg'
-            'graphicsmagick'
-            'jpeg'
-            'macvim --override-system-vim'
             'node'
-            'optipng'
-            'tree'
-            'wget'
         )
 
         for index in ${!desired_formulae[*]}
@@ -63,6 +81,20 @@ run_brew() {
         e_error "Error: Homebrew not found."
         printf "Aborting...\n"
         exit
+    fi
+
+}
+
+run_postinstall() {
+
+    # Ask before potentially overwriting OS X defaults
+    seek_confirmation "Warning: This step may modify your OS X system defaults."
+
+    if is_confirmed; then
+        bash ./bin/osxdefaults
+        e_success "OS X settings updated! You may need to restart."
+    else
+        printf "Skipped OS X settings update.\n"
     fi
 
 }

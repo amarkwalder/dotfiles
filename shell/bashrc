@@ -3,3 +3,5 @@
 # bashrc
 
 [ -n "$PS1" ] && source ~/.bash_profile
+
+# NVM Installer checks for these patterns: $NVM_DIR/nvm.sh & $NVM_DIR/bash_completion

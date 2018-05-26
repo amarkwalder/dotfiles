@@ -7,10 +7,10 @@ run_npm() {
         e_header "Installing Node.js packages..."
 
         # List of npm packages
-        local packages="gify"
+        local packages="npm nvm"
 
         # Install packages globally and quietly
-        npm install $packages --global --quiet
+        sudo npm install $packages --global --quiet
 
         [[ $? ]] && e_success "Done"
     else
