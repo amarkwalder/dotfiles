@@ -1,16 +1,12 @@
-# Dotfiles (Nicolas Gallagher)
+# Dotfiles (André Markwalder)
 
-My OS X dotfiles.
+My OS X and Ubuntu dotfiles.
 
 
 ## How to install
 
-The installation step requires the [XCode Command Line
-Tools](https://developer.apple.com/downloads) and may overwrite existing
-dotfiles in your HOME and `.vim` directories.
-
 ```bash
-$ bash -c "$(curl -fsSL raw.github.com/necolas/dotfiles/master/bin/dotfiles)"
+$ bash -c "$(curl -fsSL raw.github.com/amarkwalder/dotfiles/master/bin/dotfiles)"
 ```
 
 N.B. If you wish to fork this project and maintain your own dotfiles, you must
@@ -24,7 +20,7 @@ You should run the update when:
 * You make a change to `~/.dotfiles/git/gitconfig` (the only file that is
   copied rather than symlinked).
 * You want to pull changes from the remote repository.
-* You want to update Homebrew formulae and Node packages.
+* You want to update Homebrew formulae, Ubuntu packages and / or Node packages.
 
 Run the dotfiles command:
 
@@ -38,10 +34,6 @@ Options:
     <tr>
         <td><code>-h</code>, <code>--help</code></td>
         <td>Help</td>
-    </tr>
-    <tr>
-        <td><code>-l</code>, <code>--list</code></td>
-        <td>List of additional applications to install</td>
     </tr>
     <tr>
         <td><code>--no-packages</code></td>

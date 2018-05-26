@@ -20,8 +20,18 @@ cd ${DOTFILES_DIRECTORY}
 
 source ./lib/help
 source ./lib/utils
+
+if is_mac ; then
+    OS_CONFIG_EXT=mac
+elif is_ubuntu ; then
+    OS_CONFIG_EXT=ubuntu
+else
+    e_error "Error: Only 'Mac' and 'Ubuntu' are supported at the moment."
+    printf "Aborting...\n"
+    exit 1
+fi
+	
 source ./lib/install.$OS_CONFIG_EXT
-source ./lib/node
 
 # Help text
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then
@@ -47,11 +57,9 @@ if ! is_git_repo; then
     git init
     git remote add origin ${DOTFILES_GIT_REMOTE}
     git fetch origin master
-    # Reset the index and working tree to the fetched HEAD
-    # (submodules are cloned in the subsequent sync step)
     git reset --hard FETCH_HEAD
-    # Remove any untracked files
     git clean -fd
+    [[ $? ]] && e_success "Done"
 fi
 
 # Conditionally sync with the remote repository
@@ -59,22 +67,37 @@ if [[ $no_sync ]]; then
     printf "Skipped dotfiles sync.\n"
 else
     e_header "Syncing dotfiles..."
-    # Pull down the latest changes
     git pull --rebase origin master
-    # Update submodules
     git submodule update --recursive --init --quiet
+    [[ $? ]] && e_success "Done"
 fi
 
 # Install and update packages
 if [[ $no_packages ]]; then
     printf "Skipped package installations.\n"
 else
-    printf "Updating packages...\n"
-    # Install
     run_install
-    # Install Node packages
-    run_node
 fi
+
+# Install software
+install() {
+    declare -a files=(
+        $HOME/.dotfiles/install/*
+    )
+
+    # if these files are readable, source them
+    for index in ${!files[*]}
+    do
+        if [[ -r ${files[$index]} ]]; then
+            source ${files[$index]}
+        fi
+    done
+}
+
+install
+unset install 
+
+run_postinstall
 
 link() {
     # Force create/replace the symlink.
@@ -109,11 +132,13 @@ seek_confirmation "Warning: This step may overwrite your existing dotfiles."
 if is_confirmed; then
     e_header "Update dotfiles..."
     mirrorfiles
+    unset mirrorfiles
+    unset link
     source ${HOME}/.bash_profile
 else
+    unset mirrorfiles
+    unset link
     printf "Aborting...\n"
     exit 1
 fi
-
-run_postinstall
 

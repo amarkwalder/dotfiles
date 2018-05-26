@@ -1,0 +1,63 @@
+#!/bin/bash
+
+run_preinstall() {
+
+    e_header "Updating Ubuntu Packet Manager..."
+    sudo apt-get -y update
+    [[ $? ]] && e_success "Done"
+
+    e_header "Updating any existing apt-get packages..."
+    sudo apt-get -y upgrade
+    [[ $? ]] && e_success "Done"
+
+    # Check for git
+    if ! type_exists 'git'; then
+
+       	e_header "Installing Git..."
+        sudo apt-get install -y git
+        [[ $? ]] && e_success "Done"
+
+    fi
+
+}
+
+run_install() {
+
+    e_header "Checking status of desired apt-get package..."
+    local list_package
+    local -a missing_package
+    local -a desired_package=(
+        'coreutils' # GNU core utilities (those that come with OS X are outdated)
+        'rsync'
+        'git'
+        'bash'
+        'bash-completion'
+    )
+
+    for index in ${!desired_package[*]}
+    do
+        if ! package_exists ${desired_package[$index]}; then
+            missing_package=("${missing_package[@]}" "${desired_package[$index]}")
+        fi
+    done
+
+    [[ $? ]] && e_success "Done"
+
+    if [[ "$missing_package" ]]; then
+
+        e_header "Installing missing apt-get package..."
+        list_package=$( printf "%s " "${missing_package[@]}" )
+        sudo apt-get -y install $list_package
+        [[ $? ]] && e_success "Done"
+
+    fi
+
+}
+
+run_postinstall() {
+
+    e_header "Remove not needed packages..."
+    sudo apt-get -y autoremove
+    [[ $? ]] && e_success "Done"
+
+}

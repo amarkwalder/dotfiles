@@ -1,7 +1,0 @@
-#!/bin/bash
-
-resolv-search-path() {
-    sudo sed -i -e 's/search markwalder.local/search markwalder.local client.markwalder.local server.markwalder.local dmz.markwalder.local/g' /etc/resolv.conf
-}
-
-resolv-search-path

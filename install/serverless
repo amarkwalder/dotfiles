@@ -1,0 +1,13 @@
+#!/bin/bash
+
+install_serverless() {
+
+    e_header "Installing Serverless..."
+    local packages="serverless"
+    npm install $packages --global --quiet
+    [[ $? ]] && e_success "Done"
+
+}
+
+install_serverless
+unset install_serverless

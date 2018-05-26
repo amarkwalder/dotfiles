@@ -1,7 +1,0 @@
-#!/bin/bash
-
-bind-mounts() {
-    sudo mount --bind /mnt/c /c
-}
-
-bind-mounts

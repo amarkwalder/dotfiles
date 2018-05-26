@@ -13,11 +13,3 @@ if ! shopt -oq posix; then
     fi
 fi
 
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[ -f $NVM_DIR/versions/node/$(nvm current)/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.bash ] && . $NVM_DIR/versions/node/$(nvm current)/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.bash
-
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[ -f $NVM_DIR/versions/node/$(nvm current)/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.bash ] && . $NVM_DIR/versions/node/$(nvm current)/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.bash
-

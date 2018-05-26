@@ -1,0 +1,16 @@
+#!/bin/bash
+
+update-resolv-conf() {
+    e_header "Update resolv.conf..."
+    SEARCH="$1"
+    if [ "$SEARCH" == "" ]; then
+        printf "DNS search path entry is empty - Skipping\n"
+        return
+    fi
+    printf "Add search entry '$SEARCH'\n"
+    cat /etc/resolv.conf | grep -v search | sudo tee /etc/resolv.conf &> /dev/null
+    echo "search $SEARCH" | sudo tee -a  /etc/resolv.conf &> /dev/null
+    [[ $? ]] && e_success "Done"
+}
+
+update-resolv-conf "$DNS_SEARCH_PATH"
