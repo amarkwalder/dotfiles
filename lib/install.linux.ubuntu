@@ -35,7 +35,6 @@ run_install() {
             'git'
             'bash'
             'bash-completion'
-            'nodejs'
         )
 
         for index in ${!desired_package[*]}
@@ -45,6 +44,8 @@ run_install() {
                 missing_package=("${missing_package[@]}" "${desired_package[$index]}")
             fi
         done
+
+        [[ $? ]] && e_success "Done"
 
         if [[ "$missing_package" ]]; then
             # Convert the array of missing package into a list of space-separate strings
@@ -57,8 +58,12 @@ run_install() {
             [[ $? ]] && e_success "Done"
         fi
 
+        e_header "Remove not needed packages..."
         # Remove outdated versions from the Cellar
         sudo apt-get -y autoremove
+
+        [[ $? ]] && e_success "Done"
+
     else
         printf "\n"
         e_error "Error: apt-get or apt not found."

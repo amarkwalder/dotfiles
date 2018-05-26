@@ -4,4 +4,7 @@
 
 [ -n "$PS1" ] && source ~/.bash_profile
 
-# NVM Installer checks for these patterns: $NVM_DIR/nvm.sh & $NVM_DIR/bash_completion
+# nvm installer checks for these patterns:       $NVM_DIR/nvm.sh & $NVM_DIR/bash_completion
+# serverless installer checks for thist pattern: tabtab source for serverless package
+# sls installer checks for thist pattern:        tabtab source for sls package
+

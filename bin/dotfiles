@@ -21,7 +21,7 @@ cd ${DOTFILES_DIRECTORY}
 source ./lib/help
 source ./lib/utils
 source ./lib/install.$OS_CONFIG_EXT
-source ./lib/npm
+source ./lib/node
 
 # Help text
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then
@@ -73,7 +73,7 @@ else
     # Install
     run_install
     # Install Node packages
-    run_npm
+    run_node
 fi
 
 link() {
@@ -107,6 +107,7 @@ mirrorfiles() {
 seek_confirmation "Warning: This step may overwrite your existing dotfiles."
 
 if is_confirmed; then
+    e_header "Update dotfiles..."
     mirrorfiles
     source ${HOME}/.bash_profile
 else
