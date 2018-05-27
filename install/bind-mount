@@ -5,11 +5,11 @@ add_bind_mount() {
     printf "Bind mount for drive $DRIVE - "
     sudo mkdir -p /$DRIVE
     FSTAB_ENTRY="/mnt/$DRIVE                  /$DRIVE       none   bind            0 0"
-    if grep -q "$FSTAB_ENTRY" /etc/fstab; then
-        printf "skipped\n"
+    if sudo grep -q "$FSTAB_ENTRY" /etc/fstab; then
+    	    printf "skipped\n"
     	return
     fi	
-    sudo echo "$FSTAB_ENTRY" >> /etc/fstab
+    echo "$FSTAB_ENTRY" | sudo tee -a /etc/fstab &> /dev/null
     printf "added\n"
 }
 
