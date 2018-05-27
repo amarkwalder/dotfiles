@@ -12,8 +12,6 @@ declare -a dirs_to_append=(
     "/usr/bin"
     "$HOME/bin"
     "$HOME/.dotfiles/bin"
-#    "$(brew --prefix coreutils)/libexec/gnubin" # Add brew-installed GNU core utilities bin
-#    "$(brew --prefix)/share/npm/bin" # Add npm-installed package bin
 )
 
 # Prepend directories to PATH
@@ -33,6 +31,10 @@ do
         PATH="$PATH:${dirs_to_append[$index]}"
     fi
 done
+
+if is_mac ; then
+    PATH=$PATH:"$(brew --prefix coreutils)/libexec/gnubin"
+fi
 
 unset dirs_to_prepend dirs_to_append
 
