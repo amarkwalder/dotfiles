@@ -55,7 +55,7 @@
     attributesfile = ~/.gitattributes
 
 [credential]
-    helper = osxkeychain
+    helper = store 
 
 [diff]
     tool = mvimdiff
