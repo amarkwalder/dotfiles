@@ -1,0 +1,23 @@
+#!/bin/bash
+
+install() {
+    declare -a files=(
+        $HOME/.dotfiles/install/*.all
+        $HOME/.dotfiles/install/*.$OS_CONFIG_EXT
+    )
+
+    # if these files are readable, source them
+    for index in ${!files[*]}
+    do
+        if [[ -r ${files[$index]} ]]; then
+            echo ${files[$index]}
+        fi
+    done
+}
+
+OS_CONFIG_EXT=ubuntu
+
+install
+
+unset install
+unset OS_CONFIG_EXT

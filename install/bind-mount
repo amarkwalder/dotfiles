@@ -21,3 +21,5 @@ install_bind_mount() {
 }
 
 is_wsl && install_bind_mount
+
+unset add_bin_mount install_bind_mount

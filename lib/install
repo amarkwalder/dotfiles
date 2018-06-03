@@ -1,0 +1,4 @@
+#!/bin/bash
+
+is_mac && source $DOTFILES_DIRECTORY/lib/install.mac
+is_ubuntu && source $DOTFILES_DIRECTORY/lib/install.ubuntu

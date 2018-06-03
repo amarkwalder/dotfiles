@@ -20,18 +20,7 @@ cd ${DOTFILES_DIRECTORY}
 
 source ./lib/help
 source ./lib/utils
-
-if is_mac ; then
-    OS_CONFIG_EXT=mac
-elif is_ubuntu ; then
-    OS_CONFIG_EXT=ubuntu
-else
-    e_error "Error: Only 'Mac' and 'Ubuntu' are supported at the moment."
-    printf "Aborting...\n"
-    exit 1
-fi
-	
-source ./lib/install.$OS_CONFIG_EXT
+source ./lib/install
 
 # Help text
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then
@@ -88,8 +77,8 @@ install() {
     # if these files are readable, source them
     for index in ${!files[*]}
     do
-        if [[ -r ${files[$index]} ]]; then
-            source ${files[$index]}
+    	    if [[ -r ${files[$index]} ]]; then
+		source ${files[$index]}
         fi
     done
 }

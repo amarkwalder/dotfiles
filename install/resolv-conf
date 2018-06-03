@@ -1,6 +1,6 @@
 #!/bin/bash
 
-update-resolv-conf() {
+update-resolv-conf_ubuntu() {
     e_header "Update resolv.conf..."
     SEARCH="$1"
     if [ "$SEARCH" == "" ]; then
@@ -13,4 +13,12 @@ update-resolv-conf() {
     [[ $? ]] && e_success "Done"
 }
 
-update-resolv-conf "$DNS_SEARCH_PATH"
+update-resolv-conf_mac() {
+    e_error "NOT YET IMPLEMENTED"
+    exit 1
+}
+
+is_ubuntu && update-resolv-conf_ubuntu "$DNS_SEARCH_PATH"
+is_mac && update-resolv-conf_mac "$DNS_SEARCH_PATH"
+
+unset update-resolv-conf_ubuntu update-resolv-conf_mac
