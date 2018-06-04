@@ -22,4 +22,4 @@ install_node() {
 
 install_node
 
-unset install_node
+unset -f install_node

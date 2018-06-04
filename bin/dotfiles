@@ -84,7 +84,7 @@ install() {
 }
 
 install
-unset install 
+unset -f install 
 
 run_postinstall
 
@@ -121,12 +121,12 @@ seek_confirmation "Warning: This step may overwrite your existing dotfiles."
 if is_confirmed; then
     e_header "Update dotfiles..."
     mirrorfiles
-    unset mirrorfiles
-    unset link
+    unset -f mirrorfiles
+    unset -f link
     source ${HOME}/.bash_profile
 else
-    unset mirrorfiles
-    unset link
+    unset -f mirrorfiles
+    unset -f link
     printf "Aborting...\n"
     exit 1
 fi

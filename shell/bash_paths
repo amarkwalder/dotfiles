@@ -32,9 +32,10 @@ do
     fi
 done
 
-if is_mac ; then
-    PATH=$PATH:"$(brew --prefix coreutils)/libexec/gnubin"
-fi
+# TODO: Hardcode path if it is mac osx
+#if is_mac ; then
+#    PATH=$PATH:"$(brew --prefix coreutils)/libexec/gnubin"
+#fi
 
 unset dirs_to_prepend dirs_to_append
 

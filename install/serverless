@@ -11,4 +11,4 @@ install_serverless() {
 
 install_serverless
 
-unset install_serverless
+unset -f install_serverless

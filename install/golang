@@ -16,4 +16,4 @@ install_golang_mac() {
 is_ubuntu && install_golang_ubuntu
 is_mac && install_golang_mac
 
-unset install_golang_ubuntu install_golang_mac
+unset -f install_golang_ubuntu install_golang_mac

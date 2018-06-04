@@ -28,16 +28,17 @@ load_dotfiles() {
         $HOME/.dotfiles/shell/bash_paths       # Path modifications
         $HOME/.dotfiles/shell/bash_completion  # Bash completion
         $HOME/.bash_profile.local              # Local and private settings not under version control (e.g. git credentials)
-        $HOME/.dotfiles/shell/bash_profile.d/* # Shell Scripts to include 
+        $HOME/.dotfiles/shell/bash_profile.d/* # Shell Scripts to include
     )
 
     # if these files are readable, source them
     for index in ${!files[*]}
     do
         if [[ -r ${files[$index]} ]]; then
-            source ${files[$index]}
+    	    source ${files[$index]}
         fi
     done
+
 }
 
 load_dotfiles

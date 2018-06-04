@@ -21,4 +21,4 @@ update-resolv-conf_mac() {
 is_ubuntu && update-resolv-conf_ubuntu "$DNS_SEARCH_PATH"
 is_mac && update-resolv-conf_mac "$DNS_SEARCH_PATH"
 
-unset update-resolv-conf_ubuntu update-resolv-conf_mac
+unset -f update-resolv-conf_ubuntu update-resolv-conf_mac
