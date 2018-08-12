@@ -3,7 +3,7 @@
 install_golang_ubuntu() {
 
     e_header "Installing Google GO..."
-    sudo apt-get -y install golang-go
+    sudo apt-get -y install golang-go go-dep
     [[ $? ]] && e_success "Done"
 
 }
