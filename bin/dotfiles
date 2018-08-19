@@ -5,7 +5,7 @@ DOTFILES_TARBALL_PATH="https://github.com/amarkwalder/dotfiles/tarball/master"
 DOTFILES_GIT_REMOTE="https://github.com/amarkwalder/dotfiles.git"
 
 # set umask
-umask 0007
+umask 0022
 
 # If missing, download and extract the dotfiles repository
 if [[ ! -d ${DOTFILES_DIRECTORY} ]]; then

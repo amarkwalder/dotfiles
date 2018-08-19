@@ -1,0 +1,23 @@
+#!/bin/bash
+
+create-wsl-conf() {
+
+    cat <<EOF | sudo tee /etc/wsl.conf
+[automount]
+enabled = true
+root = /mnt/
+options = "uid=1000,gid=1000,umask=0022,fmask=0113,dmask=0002,metadata"
+mountFsTab = true
+
+[network]
+generateHosts = true
+generateResolvConf = true
+EOF
+
+    sudo umount /mnt/c
+    sudo mount -t drvfs C: /mnt/c -o uid=1000,gid=1000,umask=0022,fmask=0113,dmask=0002,metadata
+}
+
+is_wsl && create-wsl-conf 
+
+unset -f create-wsl-conf 
