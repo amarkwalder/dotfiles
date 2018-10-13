@@ -6,7 +6,7 @@ set_go_path_ubuntu() {
 }
 
 set_go_path_mac() {
-    export GOPATH="${HOME}/go"
+    export GOPATH="${HOME}/Projects/go"
     mkdir -p $GOPATH
 }
 
