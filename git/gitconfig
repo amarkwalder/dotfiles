@@ -71,3 +71,8 @@
 
 [push]
     default = simple
+
+[user]
+	name = André Markwalder
+	email = andre.markwalder@gmail.com
+    username = amarkwalder
