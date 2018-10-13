@@ -15,12 +15,12 @@ install_python_ubuntu() {
 
 }
 
-install_golang_mac() {
-    e_error "NOT YET IMPLEMENTED"
-    exit 1
+install_python_mac() {
+    e_header "Installing Python..."
+    e_error "python(mac): NOT YET IMPLEMENTED"
 }
 
-is_ubuntu && install_golang_ubuntu
-is_mac && install_golang_mac
+is_ubuntu && install_python_ubuntu
+is_mac && install_python_mac
 
 unset -f install_python_ubuntu install_python_mac

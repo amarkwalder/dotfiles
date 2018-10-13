@@ -14,8 +14,8 @@ update-resolv-conf_ubuntu() {
 }
 
 update-resolv-conf_mac() {
-    e_error "NOT YET IMPLEMENTED"
-    exit 1
+    e_header "Update resolv.conf..."
+    e_error "resolv-conf(mac): NOT YET IMPLEMENTED"
 }
 
 is_ubuntu && update-resolv-conf_ubuntu "$DNS_SEARCH_PATH"

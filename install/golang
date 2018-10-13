@@ -9,8 +9,8 @@ install_golang_ubuntu() {
 }
 
 install_golang_mac() {
-    e_error "NOT YET IMPLEMENTED"
-    exit 1
+    e_header "Installing Google GO..."
+    e_error "golang(mac): NOT YET IMPLEMENTED"
 }
 
 is_ubuntu && install_golang_ubuntu
