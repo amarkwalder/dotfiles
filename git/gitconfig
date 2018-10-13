@@ -73,6 +73,6 @@
     default = simple
 
 [user]
-	name = André Markwalder
-	email = andre.markwalder@gmail.com
+    name = André Markwalder
+    email = andre.markwalder@gmail.com
     username = amarkwalder
