@@ -1,7 +1,19 @@
 #!/bin/bash
 
-export GOPATH="/mnt/c/Projects/go"
-mkdir -p $GOPATH
+set_go_path_ubuntu() {
+    export GOPATH="/mnt/c/Projects/go"
+    mkdir -p $GOPATH
+}
+
+set_go_path_mac() {
+    export GOPATH="${HOME}/Projects/go"
+    mkdir -p $GOPATH
+}
+
+is_ubuntu && set_go_path_ubuntu
+is_mac && set_go_path_mac
+
+unset -f set_go_path_ubuntu set_go_path_mac
 
 export PATH=$PATH:$(go env GOPATH)/bin
 

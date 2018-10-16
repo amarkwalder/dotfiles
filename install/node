@@ -11,6 +11,7 @@ install_node() {
 
     e_header "Installing Node.js..."
     nvm install node
+    nvm version > ${HOME}/.nvmrc
     [[ $? ]] && e_success "Done"
 
     e_header "Installing NPM..."
