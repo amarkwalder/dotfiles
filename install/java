@@ -1,0 +1,23 @@
+#!/bin/bash
+
+install_java_ubuntu() {
+
+    e_header "Installing Java..."
+    sudo apt-get -y install openjdk-8-jdk openjdk-8-demo openjdk-8-doc openjdk-8-jre-headless openjdk-8-source 
+    sudo apt-get -y install openjdk-11-jdk openjdk-11-demo openjdk-11-doc openjdk-11-jre-headless openjdk-11-source 
+    sudo update-java-alternatives -s java-1.8.0-openjdk-amd64 
+    sudo apt-get install maven
+
+    [[ $? ]] && e_success "Done"
+
+}
+
+install_java_mac() {
+    e_header "Installing Java..."
+    e_error "NOT YET IMPLEMENTED" 
+}
+
+is_ubuntu && install_java_ubuntu
+is_mac && install_java_mac
+
+unset -f install_java_ubuntu install_java_mac

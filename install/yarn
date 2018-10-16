@@ -1,0 +1,21 @@
+#!/bin/bash
+
+install_yarn_ubuntu() {
+
+    e_header "Installing Yarn..."
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+    sudo apt-get update && sudo apt-get install --no-install-recommends yarn 
+    [[ $? ]] && e_success "Done"
+
+}
+
+install_yarn_mac() {
+    e_header "Installing Yarn..."
+    e_error "NOT YET IMPLEMENTED" 
+}
+
+is_ubuntu && install_yarn_ubuntu
+is_mac && install_yarn_mac
+
+unset -f install_yarn_ubuntu install_yarn_mac
