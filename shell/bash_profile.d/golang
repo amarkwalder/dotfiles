@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set_go_path_ubuntu() {
-    export GOPATH="/mnt/c/Projects/go"
+    export GOPATH="/c/Projects/go"
     mkdir -p $GOPATH
 }
 
