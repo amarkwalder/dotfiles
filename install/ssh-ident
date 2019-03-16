@@ -5,6 +5,7 @@ install_ssh-ident() {
     e_header "Installing ssh-ident..."
     curl -sSL https://goo.gl/MoJuKB -o /usr/local/bin/ssh-ident
     chmod 0755 /usr/local/bin/ssh-ident
+    ln -s /usr/local/bin/ssh-ident /usr/local/bin/ssh
     [[ $? ]] && e_success "Done"
 
 }
