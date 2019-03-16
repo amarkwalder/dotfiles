@@ -2,6 +2,8 @@
 
 create-wsl-conf() {
 
+    e_header "Installing WSL Automount..."
+
     cat <<EOF | sudo tee /etc/wsl.conf
 [automount]
 enabled = true
@@ -16,6 +18,9 @@ EOF
 
     sudo umount /mnt/c
     sudo mount -t drvfs C: /mnt/c -o uid=1000,gid=1000,umask=0022,fmask=0113,dmask=0002,metadata
+
+    [[ $? ]] && e_success "Done"
+
 }
 
 is_wsl && create-wsl-conf 

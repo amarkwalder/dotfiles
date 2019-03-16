@@ -42,6 +42,9 @@ install_docker_ubuntu() {
     # Install Docker Compose.
     sudo curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose &&
     sudo chmod 755 /usr/local/bin/docker-compose
+
+    [[ $? ]] && e_success "Done"
+
 }
 
 install_docker_mac() {
