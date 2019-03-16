@@ -2,7 +2,7 @@
 
 DOTFILES_DIRECTORY="${HOME}/.dotfiles"
 DOTFILES_TARBALL_PATH="https://github.com/amarkwalder/dotfiles/tarball/master"
-DOTFILES_GIT_REMOTE="https://github.com/amarkwalder/dotfiles.git"
+DOTFILES_GIT_REMOTE="ssh://github.com/amarkwalder/dotfiles"
 
 # set umask
 umask 0022
