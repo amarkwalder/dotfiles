@@ -14,7 +14,59 @@ install_java_ubuntu() {
 
 install_java_mac() {
     e_header "Installing Java..."
-    e_error "NOT YET IMPLEMENTED" 
+
+    brew tap homebrew/cask-versions
+
+    e_header "Checking status of desired Homebrew formulae (cask) ..."
+    local list_formulae
+    local -a missing_formulae
+    local -a desired_formulae=(
+        'java8'
+        'java'
+        'adoptopenjdk'
+    )
+
+    for index in ${!desired_formulae[*]}
+    do
+        if ! formula_cask_exists ${desired_formulae[$index]}; then
+            # Store the name (and options) of every missing formula
+            missing_formulae=("${missing_formulae[@]}" "${desired_formulae[$index]}")
+        fi
+    done
+
+    if [[ "$missing_formulae" ]]; then
+        # Convert the array of missing formula into a list of space-separate strings
+        list_formulae=$( printf "%s " "${missing_formulae[@]}" )
+
+        e_header "Installing missing Homebrew formulae (cask) ..."
+        # Install all missing formulae
+        brew cask install $list_formulae
+    fi
+
+    e_header "Checking status of desired Homebrew formulae..."
+    local list_formulae
+    local -a missing_formulae
+    local -a desired_formulae=(
+        'maven'
+    )
+
+    for index in ${!desired_formulae[*]}
+    do
+        if ! formula_exists ${desired_formulae[$index]}; then
+            # Store the name (and options) of every missing formula
+            missing_formulae=("${missing_formulae[@]}" "${desired_formulae[$index]}")
+        fi
+    done
+
+    if [[ "$missing_formulae" ]]; then
+        # Convert the array of missing formula into a list of space-separate strings
+        list_formulae=$( printf "%s " "${missing_formulae[@]}" )
+
+        e_header "Installing missing Homebrew formulae..."
+        # Install all missing formulae
+        brew install $list_formulae
+    fi
+    [[ $? ]] && e_success "Done"
 }
 
 is_ubuntu && install_java_ubuntu

@@ -100,7 +100,13 @@ mirrorfiles() {
     # Copy `.gitconfig`.
     # Any global git commands in `~/.bash_profile.local` will be written to
     # `.gitconfig`. This prevents them being committed to the repository.
-    rsync -avz --quiet ${DOTFILES_DIRECTORY}/git/gitconfig  ${HOME}/.gitconfig
+    rsync -avz --backup --update --quiet ${DOTFILES_DIRECTORY}/git/gitconfig  ${HOME}/.gitconfig
+
+    # Copy ssh-ident identities and config
+    # ssh keys are very sensitive data therefore they shouldn't be kept in the
+    # git repo at no time.
+    rsync -avz --backup --update --quiet ${DOTFILES_DIRECTORY}/ssh/identities  ${HOME}/.ssh/
+    rsync -avz --backup --update --quiet ${DOTFILES_DIRECTORY}/ssh/ssh-ident  ${HOME}/.ssh-ident
 
     # Force remove the vim directory if it's already there.
     if [ -e "${HOME}/.vim" ]; then
@@ -114,7 +120,6 @@ mirrorfiles() {
     link "shell/bash_profile" ".bash_profile"
     link "git/gitattributes"  ".gitattributes"
     link "git/gitignore"      ".gitignore"
-
     e_success "Dotfiles update complete!"
 }
 
