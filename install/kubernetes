@@ -14,10 +14,12 @@ install_kubernetes_ubuntu() {
 }
 
 install_kubernetes_mac() {
-    e_header "Installing Kubernetes..."
-    e_warning "Not yet implemented"
 
-#    [[ $? ]] && e_success "Done"
+    e_header "Installing Kubernetes..."
+
+    install_on_mac kubernetes-cli
+
+    [[ $? ]] && e_success "Done"
 
 }
 
