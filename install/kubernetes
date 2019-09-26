@@ -1,0 +1,27 @@
+#!/bin/bash
+
+install_kubernetes_ubuntu() {
+
+    e_header "Installing Kubernetes..."
+
+    curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+    chmod +x ./kubectl
+    sudo mv ./kubectl /usr/local/bin/kubectl
+    kubectl version
+
+    [[ $? ]] && e_success "Done"
+
+}
+
+install_kubernetes_mac() {
+    e_header "Installing Kubernetes..."
+    e_warning "Not yet implemented"
+
+#    [[ $? ]] && e_success "Done"
+
+}
+
+is_ubuntu && install_kubernetes_ubuntu
+is_mac && install_kubernetes_mac
+
+unset -f install_kubernetes_ubuntu install_kubernetes_mac
