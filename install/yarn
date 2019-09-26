@@ -17,7 +17,7 @@ install_yarn_mac() {
     local list_formulae
     local -a missing_formulae
     local -a desired_formulae=(
-        'yarn --without-node'
+        'yarn'
     )
 
     for index in ${!desired_formulae[*]}

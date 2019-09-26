@@ -3,9 +3,7 @@
 install_java_ubuntu() {
 
     e_header "Installing Java..."
-    sudo apt-get -y install openjdk-8-jdk openjdk-8-demo openjdk-8-doc openjdk-8-jre-headless openjdk-8-source 
     sudo apt-get -y install openjdk-11-jdk openjdk-11-demo openjdk-11-doc openjdk-11-jre-headless openjdk-11-source 
-    sudo update-java-alternatives -s java-1.8.0-openjdk-amd64 
     sudo apt-get install maven
 
     [[ $? ]] && e_success "Done"
@@ -21,8 +19,7 @@ install_java_mac() {
     local list_formulae
     local -a missing_formulae
     local -a desired_formulae=(
-        'java8'
-        'java'
+        'java11'
         'adoptopenjdk'
     )
 
@@ -44,27 +41,27 @@ install_java_mac() {
     fi
 
     e_header "Checking status of desired Homebrew formulae..."
-    local list_formulae
-    local -a missing_formulae
-    local -a desired_formulae=(
+    local list_formulae_maven
+    local -a missing_formulae_maven
+    local -a desired_formulae_maven=(
         'maven'
     )
 
-    for index in ${!desired_formulae[*]}
+    for index in ${!desired_formulae_maven[*]}
     do
-        if ! formula_exists ${desired_formulae[$index]}; then
+        if ! formula_exists ${desired_formulae_maven[$index]}; then
             # Store the name (and options) of every missing formula
-            missing_formulae=("${missing_formulae[@]}" "${desired_formulae[$index]}")
+            missing_formulae_maven=("${missing_formulae_maven[@]}" "${desired_formulae_maven[$index]}")
         fi
     done
 
-    if [[ "$missing_formulae" ]]; then
+    if [[ "$missing_formulae_maven" ]]; then
         # Convert the array of missing formula into a list of space-separate strings
-        list_formulae=$( printf "%s " "${missing_formulae[@]}" )
+        list_formulae_maven=$( printf "%s " "${missing_formulae_maven[@]}" )
 
         e_header "Installing missing Homebrew formulae..."
         # Install all missing formulae
-        brew install $list_formulae
+        brew install $list_formulae_maven
     fi
     [[ $? ]] && e_success "Done"
 }
