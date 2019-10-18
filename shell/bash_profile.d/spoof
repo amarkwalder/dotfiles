@@ -1,0 +1,10 @@
+#!/bin/bash
+
+function spoof-mac() {
+    if [[ -z "$1" ]]; then
+        echo "You have to pass the network interface"
+        return 1
+    fi
+    sudo ifconfig $1 ether $(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//')
+    sudo ifconfig $1 | grep ether | awk '{ print $2 }'
+}
