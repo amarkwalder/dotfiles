@@ -30,6 +30,7 @@ run_install() {
         'coreutils' # GNU core utilities (those that come with OS X are outdated)
         'rsync'
         'git'
+        'net-tools'
         'bash'
         'bash-completion'
     )
