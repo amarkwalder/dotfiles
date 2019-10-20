@@ -1,7 +1,12 @@
 #!/bin/bash
 
-set_go_path_ubuntu() {
+set_go_path_ubuntu_wsl() {
     export GOPATH="/c/Projects/go"
+    mkdir -p $GOPATH
+}
+
+set_go_path_ubuntu_linux() {
+    export GOPATH="${HOME}/Projects/go"
     mkdir -p $GOPATH
 }
 
@@ -10,10 +15,16 @@ set_go_path_mac() {
     mkdir -p $GOPATH
 }
 
-is_ubuntu && set_go_path_ubuntu
-is_mac && set_go_path_mac
 
-unset -f set_go_path_ubuntu set_go_path_mac
+if is_ubuntu && is_wsl; then
+    set_go_path_ubuntu_wsl
+elif is_ubuntu && is_linux; then
+    set_go_path_ubuntu_linux
+elif is_mac; then
+    set_go_path_mac
+fi
+
+unset -f set_go_path_ubuntu_wsl set_go_path_ubuntu_linux set_go_path_mac
 
 export PATH=$PATH:$(go env GOPATH)/bin
 
