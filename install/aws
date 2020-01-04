@@ -1,0 +1,22 @@
+#!/bin/bash
+
+install_aws_ubuntu() {
+
+    e_header "Install AWS Proxy Script..."
+    cp $DOTFILES_DIRECTORY/ssh/aws-ssm-proxy.sh ${HOME}/.ssh/ 
+    [[ $? ]] && e_success "Done"
+
+}
+
+install_aws_mac() {
+
+    e_header "Install AWS Proxy Script..."
+    cp $DOTFILES_DIRECTORY/ssh/aws-ssm-proxy.sh ${HOME}/.ssh/
+    [[ $? ]] && e_success "Done" 
+
+}
+
+is_ubuntu && install_aws_ubuntu
+is_mac && install_aws_mac
+
+unset -f install_aws_ubuntu install_aws_mac

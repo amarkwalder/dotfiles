@@ -1,0 +1,22 @@
+
+__aws_ps1 ()
+{
+	# preserve exit status
+	local exit=$?
+	local printf_format=' (AWS:%s)'
+
+        case "$#" in
+                0|1)    printf_format="${1:-$printf_format}"
+                ;;
+                *)      return $exit
+                ;;
+        esac
+
+        if [ -z "$AWS_PROFILE" ]; then
+                return $exit
+        fi
+
+	printf -- "$printf_format" "$AWS_PROFILE"
+
+	return $exit
+}
