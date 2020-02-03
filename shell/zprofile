@@ -1,0 +1,48 @@
+#!/bin/zsh
+
+# zprofile
+
+# set umask
+umask 0022
+
+# Extended globbing - used in scripts
+setopt extendedglob
+
+# set 256 color profile where possible
+if [[ $COLORTERM == gnome-* && $TERM == xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
+    export TERM=gnome-256color
+elif infocmp xterm-256color >/dev/null 2>&1; then
+    export TERM=xterm-256color
+fi
+
+# Up-front dotfiles configuration
+# Not part of `load_dotfiles` because it must be sourced before anything else
+# to be sure that commands like `brew` (when installed in a custom location)
+# are already added to the PATH.
+[ -r $HOME/.dotfilesrc ] && source $HOME/.dotfilesrc;
+
+load_dotfiles() {
+    declare -a files
+    files=(
+        $HOME/.dotfiles/shell/zsh_options               # Options
+        $HOME/.dotfiles/shell/zsh_exports               # Exports
+        $HOME/.dotfiles/shell/zsh_aliases               # Aliases
+        $HOME/.dotfiles/shell/functions/*               # Functions
+        $HOME/.dotfiles/shell/zsh_prompt                # Custom bash prompt
+        $HOME/.dotfiles/shell/zsh_paths                 # Path modifications
+        $HOME/.dotfiles/shell/zsh_completion            # zsh completion
+        $HOME/.zsh_profile.local                        # Local and private settings not under version control (e.g. git credentials)
+        $HOME/.dotfiles/shell/profile.d/^*.bash    # Shell Scripts to include
+    )
+
+    # if these files are readable, source them
+    for file in ${files}; do
+        if [[ -r $file ]]; then
+    	    source $file
+        fi
+    done
+
+}
+
+load_dotfiles
+unset load_dotfiles

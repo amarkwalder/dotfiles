@@ -1,0 +1,9 @@
+#!/bin/zsh
+
+# zsh_options
+
+# Append to the Bash history file, rather than overwriting it
+setopt histappend
+
+# Case-insensitive globbing (used in pathname expansion)
+setopt nocaseglob

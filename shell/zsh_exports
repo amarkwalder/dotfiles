@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/zsh
 
-# bash_exports
+# zsh_exports
 
 # Make vim the default editor
 export EDITOR="vim"

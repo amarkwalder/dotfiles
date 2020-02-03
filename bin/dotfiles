@@ -7,6 +7,9 @@ DOTFILES_GIT_REMOTE="ssh://github.com/amarkwalder/dotfiles"
 # set umask
 umask 0022
 
+# Extended globbing - used in scripts
+shopt -s extglob
+
 # If missing, download and extract the dotfiles repository
 if [[ ! -d ${DOTFILES_DIRECTORY} ]]; then
     printf "$(tput setaf 7)Downloading dotfiles...\033[m\n"
@@ -118,6 +121,13 @@ mirrorfiles() {
     # `.dotfiles` repository.
     link "shell/bashrc"       ".bashrc"
     link "shell/bash_profile" ".bash_profile"
+
+    link "shell/zshenv"       ".zshenv"
+    link "shell/zprofile"     ".zprofile"
+    link "shell/zshrc"        ".zshrc"
+    link "shell/zlogin"       ".zlogin"
+    link "shell/zlogout"      ".zlogout"
+
     link "git/gitattributes"  ".gitattributes"
     link "git/gitignore"      ".gitignore"
     e_success "Dotfiles update complete!"

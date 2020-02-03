@@ -1,0 +1,44 @@
+#!/bin/zsh
+
+# zsh_paths
+
+# Directories to be prepended to PATH
+declare -a dirs_to_prepend
+dirs_to_prepend=(
+    "/usr/local/bin" # Ensure that this bin always takes precedence over `/usr/bin`
+)
+
+# Directories to be appended to PATH
+declare -a dirs_to_append
+dirs_to_append=(
+    "/usr/bin"
+    "$HOME/bin"
+    "$HOME/.dotfiles/bin"
+)
+
+# Prepend directories to PATH
+for dir_to_prepend in ${dirs_to_prepend}
+do
+    if [ -d ${dir_to_prepend} ]; then
+        # If these directories exist, then prepend them to existing PATH
+        PATH="${dir_to_prepend}:$PATH"
+    fi
+done
+
+# Append directories to PATH
+for dir_to_append in ${dirs_to_append}
+do
+    if [ -d ${dir_to_append} ]; then
+        # If these bins exist, then append them to existing PATH
+        PATH="$PATH:${dir_to_append}"
+    fi
+done
+
+# TODO: Hardcode path if it is mac osx
+#if is_mac ; then
+#    PATH=$PATH:"$(brew --prefix coreutils)/libexec/gnubin"
+#fi
+
+unset dirs_to_prepend dirs_to_append
+
+export PATH

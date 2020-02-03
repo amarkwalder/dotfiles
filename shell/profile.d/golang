@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 set_go_path_ubuntu_wsl() {
     export GOPATH="/c/Projects/go"

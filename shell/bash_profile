@@ -5,6 +5,9 @@
 # set umask
 umask 0022
 
+# Extended globbing - used in scripts
+shopt -s extglob
+
 # set 256 color profile where possible
 if [[ $COLORTERM == gnome-* && $TERM == xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
     export TERM=gnome-256color
@@ -20,15 +23,15 @@ fi
 
 load_dotfiles() {
     declare -a files=(
-        $HOME/.dotfiles/shell/bash_options     # Options
-        $HOME/.dotfiles/shell/bash_exports     # Exports
-        $HOME/.dotfiles/shell/bash_aliases     # Aliases
-        $HOME/.dotfiles/shell/functions/*      # Functions
-	$HOME/.dotfiles/shell/bash_prompt      # Custom bash prompt
-        $HOME/.dotfiles/shell/bash_paths       # Path modifications
-        $HOME/.dotfiles/shell/bash_completion  # Bash completion
-        $HOME/.bash_profile.local              # Local and private settings not under version control (e.g. git credentials)
-        $HOME/.dotfiles/shell/bash_profile.d/* # Shell Scripts to include
+        $HOME/.dotfiles/shell/bash_options              # Options
+        $HOME/.dotfiles/shell/bash_exports              # Exports
+        $HOME/.dotfiles/shell/bash_aliases              # Aliases
+        $HOME/.dotfiles/shell/functions/*               # Functions
+	    $HOME/.dotfiles/shell/bash_prompt               # Custom bash prompt
+        $HOME/.dotfiles/shell/bash_paths                # Path modifications
+        $HOME/.dotfiles/shell/bash_completion           # Bash completion
+        $HOME/.bash_profile.local                       # Local and private settings not under version control (e.g. git credentials)
+        $HOME/.dotfiles/shell/profile.d/^*.zsh     # Shell Scripts to include
     )
 
     # if these files are readable, source them

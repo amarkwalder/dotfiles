@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 function spoof-mac() {
     if [[ -z "$1" ]]; then

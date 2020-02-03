@@ -50,6 +50,7 @@ run_install() {
             'git'
             'bash'
             'bash-completion'
+            'zsh'
             'node'
         )
 
@@ -69,6 +70,11 @@ run_install() {
             # Install all missing formulae
             brew install $list_formulae
         fi
+
+        # Install OhMyZsh
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended"
+        rm .zshrc.pre-oh-my-zsh*
+
         [[ $? ]] && e_success "Done"
 
     else

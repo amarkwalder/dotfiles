@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 lowercase(){
 	echo "$1" | sed "y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/"
@@ -6,41 +6,41 @@ lowercase(){
 
 load_systeminfo(){
 
-	[ ! -z ${OS_NAME+x} ] && return
+	[[ ! -z ${OS_NAME+x} ]] && return
 
 	OS_NAME=`lowercase \`uname\``
 	OS_KERNEL=`uname -r`
 	OS_MACH=`uname -m`
 
-	if [ "${OS_NAME}" == "windowsnt" ]; then
+	if [[ "${OS_NAME}" == "windowsnt" ]]; then
 		OS_NAME=windows
-	elif [ "${OS_NAME}" == "darwin" ]; then
+	elif [[ "${OS_NAME}" == "darwin" ]]; then
 		OS_NAME=mac
 	else
 		OS_NAME=`uname`
-		if [ "${OS_NAME}" = "Linux" ] ; then
-			if [ -f /etc/redhat-release ] ; then
+		if [ "${OS_NAME}" = "Linux" ]] ; then
+			if [[ -f /etc/redhat-release ]] ; then
 				OS_DIST_BASED_ON='RedHat'
 				OS_DIST=`cat /etc/redhat-release |sed s/\ release.*//`
 				OS_CODENAME=`cat /etc/redhat-release | sed s/.*\(// | sed s/\)//`
 				OS_REV=`cat /etc/redhat-release | sed s/.*release\ // | sed s/\ .*//`
-			elif [ -f /etc/SuSE-release ] ; then
+			elif [[ -f /etc/SuSE-release ]] ; then
 				OS_DIST_BASED_ON='SuSe'
 				OS_CODENAME=`cat /etc/SuSE-release | tr "\n" ' '| sed s/VERSION.*//`
 				OS_REV=`cat /etc/SuSE-release | tr "\n" ' ' | sed s/.*=\ //`
-			elif [ -f /etc/mandrake-release ] ; then
+			elif [[ -f /etc/mandrake-release ]] ; then
 				OS_DIST_BASED_ON='Mandrake'
 				OS_CODENAME=`cat /etc/mandrake-release | sed s/.*\(// | sed s/\)//`
 				OS_REV=`cat /etc/mandrake-release | sed s/.*release\ // | sed s/\ .*//`
-			elif [ -f /etc/debian_version ] ; then
+			elif [[ -f /etc/debian_version ]] ; then
 				OS_DIST_BASED_ON='Debian'
-				if [ -f /etc/lsb-release ] ; then
+				if [[ -f /etc/lsb-release ]] ; then
 			        	OS_DIST=`cat /etc/lsb-release | grep '^DISTRIB_ID' | awk -F=  '{ print $2 }'`
 			                OS_CODENAME=`cat /etc/lsb-release | grep '^DISTRIB_CODENAME' | awk -F=  '{ print $2 }'`
 			                OS_REV=`cat /etc/lsb-release | grep '^DISTRIB_RELEASE' | awk -F=  '{ print $2 }'`
             			fi
 			fi
-			if [ -f /etc/UnitedLinux-release ] ; then
+			if [[ -f /etc/UnitedLinux-release ]] ; then
 				OS_DIST="${OS_DIST}[`cat /etc/UnitedLinux-release | tr "\n" ' ' | sed s/VERSION.*//`]"
 			fi
 			OS_NAME=`lowercase $OS_NAME`
@@ -71,7 +71,7 @@ systeminfo() {
 
 is_mac() {
     load_systeminfo
-    if [ "$OS_NAME" == "mac" ]; then
+    if [[ "$OS_NAME" == "mac" ]]; then
         return 0
     fi
     return 1
@@ -79,7 +79,7 @@ is_mac() {
 
 is_linux() {
     load_systeminfo
-    if [ "$OS_NAME" == "linux" ]; then
+    if [[ "$OS_NAME" == "linux" ]]; then
         return 0
     fi
     return 1
@@ -95,15 +95,14 @@ is_wsl() {
 
 is_ubuntu() {
     load_systeminfo
-    if [ "$OS_DIST" == "Ubuntu" ]; then
+    if [[ "$OS_DIST" == "Ubuntu" ]]; then
         return 0
     fi
     return 1
 }
     
-if [ "${1}" == "--print" ]; then
+if [[ "${1}" == "--print" ]]; then
     systeminfo
-elif [ "${1}" == "--load" ]; then
+elif [[ "${1}" == "--load" ]]; then
     load_systeminfo
 fi
-
