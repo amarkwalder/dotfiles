@@ -73,7 +73,7 @@ run_install() {
 
         # Install OhMyZsh
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended"
-        rm .zshrc.pre-oh-my-zsh*
+        rm -f .zshrc.pre-oh-my-zsh* > /dev/null 2>&1
 
         [[ $? ]] && e_success "Done"
 
